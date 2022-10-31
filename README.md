@@ -1,1 +1,1 @@
-air-quality-control.vercel.app
+https://air-quality-advisor.vercel.app/
