@@ -28,7 +28,10 @@ function App() {
           onCloseState1()
           onOpenState2()
         }}/>
-        <Stats/>
+        <Stats label={'CO'} value={dataset?.[3].at(-1)}click={function (){
+          onOpenState1()
+          onOpenState2()
+        }}/>
         <Stats/>
         <Stats/>
         <Stats/>
@@ -67,6 +70,7 @@ function App() {
       >
         <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='humidity' enter={!isState1&&!isState2}/>
         <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[2]} title='temperature' enter={!isState1&&isState2}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[3]} title='co' enter={isState1&&isState2}/>
       </Box>
       </GridItem>
       </Grid>

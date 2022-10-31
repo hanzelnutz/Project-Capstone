@@ -9,7 +9,7 @@ const url = "https://us-east-1-1.aws.cloud2.influxdata.com";
 let query = `from(bucket: "random")
   |> range(start: -1h)
   |> filter(fn: (r) => r["_measurement"] == "airSensors")
-  |> filter(fn: (r) => r["_field"] == "humidity" or r["_field"] == "temperature" )
+  |> filter(fn: (r) => r["_field"] == "humidity" or r["_field"] == "temperature" or r["_field"] == "co" )
   |> filter(fn: (r) => r["sensor_id"] == "TLM0102")
   |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
   |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
@@ -36,20 +36,24 @@ useEffect(() => {
         let finalData = []
         let humidity = []
         let temperature = []
+        let co = []
         let time = []
 
         for (let i = 0; i < res.length; i++) {
           humidity.push(res[i]["humidity"].toFixed(2));
           temperature.push(res[i]["temperature"].toFixed(2));
+          temperature.push(res[i]["co"].toFixed(2));
           let date=new Date(res[i]["_time"]).toLocaleTimeString('en-IT',{ hour: '2-digit', minute:'2-digit',hour12: false })
           time.push(date);
         }
         time.shift()
         humidity.shift()
         temperature.shift()
+        co.shift()
         finalData.push(time);
         finalData.push(humidity);
         finalData.push(temperature);
+        finalData.push(co);
         setData(finalData);
       },
       error(error) {
