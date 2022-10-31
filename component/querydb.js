@@ -42,7 +42,7 @@ useEffect(() => {
         for (let i = 0; i < res.length; i++) {
           humidity.push(res[i]["humidity"].toFixed(2));
           temperature.push(res[i]["temperature"].toFixed(2));
-          temperature.push(res[i]["co"].toFixed(2));
+          co.push(res[i]["co"].toFixed(3));
           let date=new Date(res[i]["_time"]).toLocaleTimeString('en-IT',{ hour: '2-digit', minute:'2-digit',hour12: false })
           time.push(date);
         }
