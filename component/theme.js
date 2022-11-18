@@ -5,7 +5,7 @@ const MyTheme = extendTheme({
     styles: {
         global: () => ({
             body: {
-                bgColor: '#343742',
+                bgColor: '#4A525A',
             },
         }),
     },

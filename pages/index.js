@@ -73,6 +73,8 @@ function App() {
         boxShadow={'lg'}
         minW='150px'
         minH='610px'
+        border={'2px'}
+        borderColor={'black'}
       /></GridItem>
       <GridItem colSpan={{base:'auto',md:7}}>
       <Box
@@ -83,11 +85,14 @@ function App() {
         borderRadius="20"
         bgColor={'white'}
         textAlign='center'
+        textColor={'black'}
         justifyContent={'center'}
         alignItems={'center'}
         boxShadow={'lg'}
         minW='150px'
         minH='610px'
+        border={'2px'}
+        borderColor={'black'}
       >
         <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='humidity' enter={!isState1&&!isState2&&!isState3}/>
         <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[2]} title='temperature' enter={!isState1&&!isState2&&isState3}/>
