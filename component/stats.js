@@ -25,6 +25,13 @@ function Stats({label,value,click,ispu}) {
       return 'white'
     }
   }
+  function displaytext (){
+    if(ispu==-1){
+      return ' '
+    }else{
+      return 'ISPU Score : ' + ispu
+    }
+  }
   return (
     <Box 
       onClick={click}
@@ -40,15 +47,16 @@ function Stats({label,value,click,ispu}) {
       maxH='120px'
       border={'2px'}
       borderColor={ndcolor}
+      minH = '120px'
     >
-        <Text fontSize={'xl'} >
+        <Text fontSize={'xl'} fontWeight={'bold'}>
               {label}
             </Text>
         <Text fontSize={'3xl'} fontWeight={'bold'}>
               {value}
             </Text>
             <Text fontSize={'md'} fontWeight={'bold'}>
-              ISPU Score : {ispu}
+              {displaytext()}
             </Text>
     </Box>
   )
@@ -60,7 +68,7 @@ Stats.propTypes={
 Stats.defaultProps={
     label:'-',
     value:0,
-    ispu:0,
+    ispu:1,
 }
 
 export default Stats

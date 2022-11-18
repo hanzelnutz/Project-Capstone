@@ -1,10 +1,12 @@
 import React from "react"
 import { Box ,Collapse} from "@chakra-ui/react"
 import Chart from "chart.js/auto"
-import { Line } from "react-chartjs-2"
+import { Line} from "react-chartjs-2"
+import { defaults } from 'chart.js'
 import PropTypes from 'prop-types'
 
-
+defaults.font.family = 'Montserrat'
+defaults.font.weight = 'bold'
 function LineChart ({xlabel,ylabel,title,enter}){
   const data={
     labels: ylabel,
