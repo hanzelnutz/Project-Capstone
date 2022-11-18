@@ -94,13 +94,13 @@ function App() {
         border={'2px'}
         borderColor={'black'}
       >
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='humidity' enter={!isState1&&!isState2&&!isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[2]} title='temperature' enter={!isState1&&!isState2&&isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[3]} title='co' enter={!isState1&&isState2&&!isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='4' enter={!isState1&&isState2&&isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='5' enter={isState1&&!isState2&&!isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='6' enter={isState1&&!isState2&&isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='7' enter={isState1&&isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#0a9396'} title='humidity' enter={!isState1&&!isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[2]} color={'#ee9b00'} title='temperature' enter={!isState1&&!isState2&&isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[3]} color={'#52b788'} title='co' enter={!isState1&&isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#d62828'} title='4' enter={!isState1&&isState2&&isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#ffc300'} title='5' enter={isState1&&!isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#6a4c93'} title='6' enter={isState1&&!isState2&&isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#43291f'} title='7' enter={isState1&&isState2&&!isState3}/>
       </Box>
       </GridItem>
       </Grid>

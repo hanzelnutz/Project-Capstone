@@ -7,15 +7,15 @@ import PropTypes from 'prop-types'
 
 defaults.font.family = 'Montserrat'
 defaults.font.weight = 'bold'
-function LineChart ({xlabel,ylabel,title,enter}){
+function LineChart ({xlabel,ylabel,title,enter,color}){
   const data={
     labels: ylabel,
     datasets: [
       {
         label: title,
         data: xlabel,
-        borderColor: 'rgb(255, 122, 232)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: color,
+        backgroundColor: color,
       },
     ]
   }
