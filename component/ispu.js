@@ -74,7 +74,9 @@ function getSO2ISPU(x){
        return "TINGGI";}
 }
 // ------ end of get SO2 ISPU
-
+function getCOISPU(x){
+   
+}
 
 
 

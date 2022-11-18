@@ -22,12 +22,12 @@ function App() {
       <SimpleGrid columns={{ base: 1, md: 8 }} gap={{ base: '6', lg: '5' }} pb={5} >
         <Bounce cascade>
         <Stats h='400px' label={'Time'} value={dataset?.[0].at(-1)} ispu={-1} fontSize='lg'/>
-        <Stats label={'Humidity'} value={dataset?.[1].at(-1)} click={function (){
+        <Stats label={'Humidity'} value={dataset?.[1].at(-1)}  ispu={-1} click={function (){
           onCloseState1()
           onCloseState2()
           onCloseState3()
         }}/>
-        <Stats label={'Temperature'} value={dataset?.[2].at(-1)}click={function (){
+        <Stats label={'Temperature'} value={dataset?.[2].at(-1)} ispu={-1} click={function (){
           onCloseState1()
           onCloseState2()
           onOpenState3()
