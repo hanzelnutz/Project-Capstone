@@ -5,7 +5,7 @@ const MyTheme = extendTheme({
     styles: {
         global: () => ({
             body: {
-                bgGradient: 'linear(to-l, #95e7f7,#cda3f0)',
+                bgColor: '#343742',
             },
         }),
     },

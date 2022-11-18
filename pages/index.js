@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react"
 import Title from "../component/title"
 import Stats from "../component/stats"
 import { Fade, Slide ,Bounce} from "react-awesome-reveal"
-import Querydb from "../component/querydb"
+import {Querydb, QuerydbMA} from "../component/querydb"
 import LineChart from "../component/chart"
 
 function App() {
   const { isOpen: isState1, onOpen: onOpenState1, onClose: onCloseState1} = useDisclosure()
   const { isOpen: isState2, onOpen: onOpenState2, onClose: onCloseState2} = useDisclosure()
+  const { isOpen: isState3, onOpen: onOpenState3, onClose: onCloseState3} = useDisclosure()
   let dataset=Querydb()
+  let data24h=QuerydbMA()
   return (
     <Container maxW={'90%'} maxH={'100%'} px={6} pt={16} textColor='white'  pb={10}>
       <Box minH={'100px'} mb={{base: 0, md:10}}>
@@ -19,23 +21,42 @@ function App() {
       </Box>
       <SimpleGrid columns={{ base: 1, md: 8 }} gap={{ base: '6', lg: '5' }} pb={5} >
         <Bounce cascade>
-        <Stats h='400px' label={'Time'} value={dataset?.[0].at(-1)} fontSize='lg'/>
+        <Stats h='400px' label={'Time'} value={dataset?.[0].at(-1)} ispu={-1} fontSize='lg'/>
         <Stats label={'Humidity'} value={dataset?.[1].at(-1)} click={function (){
           onCloseState1()
           onCloseState2()
+          onCloseState3()
         }}/>
         <Stats label={'Temperature'} value={dataset?.[2].at(-1)}click={function (){
           onCloseState1()
-          onOpenState2()
+          onCloseState2()
+          onOpenState3()
         }}/>
         <Stats label={'CO'} value={dataset?.[3].at(-1)}click={function (){
+          onCloseState1()
+          onOpenState2()
+          onCloseState3()
+        }}/>
+        <Stats ispu={300} click={function (){
+          onCloseState1()
+          onOpenState2()
+          onOpenState3()
+        }}/>
+        <Stats ispu={200} click={function (){
+          onOpenState1()
+          onCloseState2()
+          onCloseState3()
+        }}/>
+        <Stats ispu={100} click={function (){
+          onOpenState1()
+          onCloseState2()
+          onOpenState3()
+        }}/>
+        <Stats ispu={400} click={function (){
           onOpenState1()
           onOpenState2()
+          onCloseState3()
         }}/>
-        <Stats/>
-        <Stats/>
-        <Stats/>
-        <Stats/>
         </Bounce>
       </SimpleGrid>
       <Grid templateColumns={{base: 'repeat(1, 1fr)',md:'repeat(10, 1fr)'}} gap={4}>
@@ -68,9 +89,13 @@ function App() {
         minW='150px'
         minH='610px'
       >
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='humidity' enter={!isState1&&!isState2}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[2]} title='temperature' enter={!isState1&&isState2}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[3]} title='co' enter={isState1&&isState2}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='humidity' enter={!isState1&&!isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[2]} title='temperature' enter={!isState1&&!isState2&&isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[3]} title='co' enter={!isState1&&isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='4' enter={!isState1&&isState2&&isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='5' enter={isState1&&!isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='6' enter={isState1&&!isState2&&isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} title='7' enter={isState1&&isState2&&!isState3}/>
       </Box>
       </GridItem>
       </Grid>
