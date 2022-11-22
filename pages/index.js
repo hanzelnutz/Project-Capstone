@@ -5,6 +5,11 @@ import Stats from "../component/stats"
 import { Fade, Slide ,Bounce} from "react-awesome-reveal"
 import {Querydb, QuerydbMA} from "../component/querydb"
 import LineChart from "../component/chart"
+import {getCOISPU, getPM25ISPU, getPM10ISPU, getO3ISPU, getCHISPU, getNO2ISPU} from "../component/ispu"
+import Clock from "../component/clock"
+import {AdvicePM, AdviceCH, AdviceCO, AdviceO3, AdviceNO2, AdviceSuhu, AdviceHumid} from "../component/advice"
+
+
 
 function App() {
   const { isOpen: isState1, onOpen: onOpenState1, onClose: onCloseState1} = useDisclosure()
@@ -12,8 +17,15 @@ function App() {
   const { isOpen: isState3, onOpen: onOpenState3, onClose: onCloseState3} = useDisclosure()
   let dataset=Querydb()
   let data24h=QuerydbMA()
+  let ispuCO = parseInt(data24h?.[0])
+  let ispuCH = parseInt(data24h?.[1])
+  let ispuNO2 = parseInt(data24h?.[2])
+  let ispuPM25 = parseInt(data24h?.[3])
+  let ispuPM10 = parseInt(data24h?.[4])
+  let ispuO3 = parseInt(data24h?.[5])
+  console.log(ispuCH, getCHISPU(ispuCH))
   return (
-    <Container maxW={'90%'} maxH={'100%'} px={6} pt={16} textColor='white'  pb={10}>
+    <Container maxW={'90%'} maxH={'100%'} px={6} pt={16} textColor="black"  pb={10}>
       <Box minH={'100px'} mb={{base: 0, md:10}}>
         <Fade>
           <Title/>
@@ -21,38 +33,44 @@ function App() {
       </Box>
       <SimpleGrid columns={{ base: 1, md: 8 }} gap={{ base: '6', lg: '5' }} pb={5} >
         <Bounce cascade>
-        <Stats h='400px' label={'Time'} value={dataset?.[0].at(-1)} ispu={-1} fontSize='lg'/>
-        <Stats label={'Humidity'} value={dataset?.[1].at(-1)}  ispu={-1} click={function (){
+        {/* <Stats h='400px' label={'Time'} value={dataset?.[0].at(-1)} ispu={-1} fontSize='lg'/> */}
+        <Stats label={'Humidity (%)'} value={dataset?.[1].at(-1)}  ispu={-1} click={function (){
           onCloseState1()
           onCloseState2()
           onCloseState3()
         }}/>
-        <Stats label={'Temperature'} value={dataset?.[2].at(-1)} ispu={-1} click={function (){
+        <Stats label={'Temperature (°C)'} value={dataset?.[2].at(-1)} ispu={-1} click={function (){
           onCloseState1()
           onCloseState2()
           onOpenState3()
         }}/>
-        <Stats label={'CO'} value={dataset?.[3].at(-1)}click={function (){
+        <Stats label={'CO (µg/m3)'} value={dataset?.[3].at(-1)} ispu={parseInt(getCOISPU(ispuCO))}click={function (){
           onCloseState1()
           onOpenState2()
           onCloseState3()
         }}/>
-        <Stats ispu={300} click={function (){
+        <Stats label={'CH (µg/m3)'} value={dataset?.[4].at(-1)}ispu={parseInt(getCHISPU(ispuCH))} click={function (){
           onCloseState1()
           onOpenState2()
           onOpenState3()
         }}/>
-        <Stats ispu={200} click={function (){
+        
+        <Stats label={'NO2 (µg/m3)'} value={dataset?.[5].at(-1)}ispu={parseInt(getNO2ISPU(ispuNO2))} click={function (){
           onOpenState1()
           onCloseState2()
           onCloseState3()
         }}/>
-        <Stats ispu={100} click={function (){
+        <Stats label={'PM25 (µg/m3)'} value={dataset?.[6].at(-1)}ispu={parseInt(getPM25ISPU(ispuPM25))} click={function (){
           onOpenState1()
           onCloseState2()
           onOpenState3()
         }}/>
-        <Stats ispu={400} click={function (){
+        <Stats label={"PM10 (µg/m3)" } value={dataset?.[7].at(-1)} ispu={parseInt(getPM10ISPU(ispuPM10))} click={function (){
+          onOpenState1()
+          onOpenState2()
+          onCloseState3()
+        }}/>
+         <Stats label={'O3 (µg/m3)'} value={dataset?.[8].at(-1)} ispu={parseInt(getO3ISPU(ispuO3))} click={function (){
           onOpenState1()
           onOpenState2()
           onCloseState3()
@@ -60,7 +78,8 @@ function App() {
         </Bounce>
       </SimpleGrid>
       <Grid templateColumns={{base: 'repeat(1, 1fr)',md:'repeat(10, 1fr)'}} gap={4}>
-      <GridItem colSpan={{base:'auto',md:3}}><Box
+      <GridItem colSpan={{base:'auto',md:3}}>
+        <Box
         px={{ base: '5', md: '6' }}
         py={{ base: '5', md: '6' }}
         maxW={{ base: '300px', md: '100%' }}
@@ -75,7 +94,18 @@ function App() {
         minH='610px'
         border={'2px'}
         borderColor={'black'}
-      /></GridItem>
+      >
+        <checkAll ispuPM25={getPM25ISPU(ispuPM25)} ispuPM10={getPM10ISPU(ispuPM10)} ispuCO={getCOISPU(ispuCO)} ispuO3={getO3ISPU(ispuO3)} ispuNO2={getNO2ISPU(ispuNO2)} ispuCH={getCHISPU(ispuCH)}/>
+        <AdviceCH ispu={getCHISPU(ispuCH)}/>
+        <AdviceCO ispu={getCOISPU(ispuCO)}/>
+        <AdvicePM ispu10={getPM10ISPU(ispuPM10)} ispu25={getPM25ISPU(ispuPM25)}/>
+        <AdviceO3 ispu={getO3ISPU(ispuO3)}/>
+        <AdviceNO2 ispu={getNO2ISPU(ispuNO2)}/>
+        <AdviceSuhu temp={dataset?.[2].at(-1)}/>
+        <AdviceHumid humid={dataset?.[1].at(-1)}/>
+        
+      </Box>
+      </GridItem>
       <GridItem colSpan={{base:'auto',md:7}}>
       <Box
         px={{ base: '5', md: '6' }}
@@ -94,13 +124,13 @@ function App() {
         border={'2px'}
         borderColor={'black'}
       >
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#0a9396'} title='humidity' enter={!isState1&&!isState2&&!isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[2]} color={'#ee9b00'} title='temperature' enter={!isState1&&!isState2&&isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[3]} color={'#52b788'} title='co' enter={!isState1&&isState2&&!isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#d62828'} title='4' enter={!isState1&&isState2&&isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#ffc300'} title='5' enter={isState1&&!isState2&&!isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#6a4c93'} title='6' enter={isState1&&!isState2&&isState3}/>
-        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#43291f'} title='7' enter={isState1&&isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[1]} color={'#0a9396'} title='Humidity' enter={!isState1&&!isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[2]} color={'#ee9b00'} title='Temperature' enter={!isState1&&!isState2&&isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[3]} color={'#52b788'} title='CO' enter={!isState1&&isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[4]} color={'#d62828'} title='CH' enter={!isState1&&isState2&&isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[5]} color={'#ffc300'} title='NO2' enter={isState1&&!isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[6]} color={'#6a4c93'} title='PM25' enter={isState1&&!isState2&&isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[7]} color={'#43291f'} title='PM10' enter={isState1&&isState2&&!isState3}/>
       </Box>
       </GridItem>
       </Grid>

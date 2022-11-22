@@ -1,39 +1,8 @@
 
-const SO2 = [50, 63, 800, 800, 800, 800];
-const PM25 = [50, 63, 53, 74, 160, 160, 160, 160];
-const PM10 = [50, 63, 53, 74, 350, 350, 350, 350];
-
-// ------ cari rata2 (contoh)
-const movingAverage = (arr = []) => {
-   for(let i = 0; i < arr.length; i++){
-      sum = arr.reduceRight((c => (s, v) => s + (c && c-- && v))(4), 0)
-      var avg = sum / 4;
-   };
-   return avg;
-};
-// ------ end of cari rata2 (contoh)
-
-// ------ cari rata2 24 jam
-const movingAverage24h = (arr = []) => {
-   for(let i = 0; i < arr.length; i++){
-      sum = arr.reduceRight((c => (s, v) => s + (c && c-- && v))(1440), 0)
-      var avg = sum / 1440;
-   };
-   return avg;
-};
-// ------ end of cari rata2 24 jam
-
-// ------ parameter untuk fungsi ISPU
-let avgPM10 = movingAverage(PM10);
-let avgPM25 = movingAverage(PM25);
-let avgSO2 = movingAverage(SO2);
-// ------ end of parameter untuk fungsi ISPU
-
-
 // ------ get PM10 ISPU
-function getPM10ISPU(x){
+export function getPM10ISPU(x){
    if (x <= 50) {
-      return "RENDAH";}
+      return x * 50 / 50;}
    else if (x <= 150) {
       return 50 + (x - 50) * (100 - 50) / (150 - 50);}
    else if (x <= 350) {
@@ -41,14 +10,16 @@ function getPM10ISPU(x){
    else if (x <= 420) {
       return 200 + (x - 350) * (300 - 200) / (420 - 350);}
    else if (x <= 500) {
-      return "TINGGI";}
+      return 300 + (x - 420) * (500 - 300) / (500 - 420);}
+   else if (x >= 500) {
+      return 500;}
 }
 // ------ end of get PM10 ISPU
 
 // ------ get PM25 ISPU
-function getPM25ISPU(x){
+export function getPM25ISPU(x){
    if (x <= 15.5) {
-      return "RENDAH";}
+      return x * 50 / 15.5;}
    else if (x <= 55.4) {
       return 50 + (x - 15.5) * (100 - 50) / (55.4 - 15.5);}
    else if (x <= 150.4) {
@@ -56,30 +27,79 @@ function getPM25ISPU(x){
    else if (x <= 250.4) {
       return 200 + (x - 150.4) * (300 - 200) / (250.4 - 150.4);}
    else if (x <= 500) {
-      return "TINGGI";}
+      return 300 + (x - 250.4) * (500 - 300) / (500 - 250.4);}   
+   else if (x >= 500) {
+      return 500;}
 }
 // ------ end of get PM25 ISPU
 
-// ------ get SO2 ISPU
-function getSO2ISPU(x){
-   if (x <= 52) {
-      return "RENDAH";}
-   else if (x <= 180) {
-      return 50 + (x - 52) * (100 - 50) / (180 - 52);}
+
+
+// ------ get CO ISPU
+export function getCOISPU(x){
+   if (x <= 4000) {
+      return (x) * (50)/4000;}
+   else if (x <= 8000) {
+      return 50 + (x - 4000) * (100 - 50) / (8000 - 4000);}
+   else if (x <= 15000) {
+      return 100 + (x - 8000) * (200 - 100) / (15000 - 8000);}
+   else if (x <= 30000) {
+      return 200 + (x - 15000) * (300 - 200) / (30000 - 15000);}
+   else if (x <= 450000) {
+      return 300 + (x - 30000) * (500 - 300) / (45000 - 30000);}  
+   else if (x >= 45000) {
+       return 500;}
+}
+// ------ end of get CO ISPU
+
+export function getO3ISPU(x){
+   if (x <= 120) {
+      return x * 50 / 120;}
+   else if (x <= 235) {
+      return 50 + (x - 120) * (100 - 50) / (235 - 120);}
    else if (x <= 400) {
-      return 100 + (x - 180) * (200 - 100) / (400 - 180);}
+      return 100 + (x - 235) * (200 - 100) / (400 - 235);}
    else if (x <= 800) {
       return 200 + (x - 400) * (300 - 200) / (800 - 400);}
-   else if (x <= 1200) {
-       return "TINGGI";}
+   else if (x <= 1000) {
+      return 300 + (x - 800) * (500 - 300) / (1000 - 800);}  
+   else if (x >= 1000) {
+       return 500;}
 }
-// ------ end of get SO2 ISPU
-function getCOISPU(x){
-   
+// ------ end of get CO ISPU
+
+export function getCHISPU(x){
+   if (x <= 45) {
+      return x * 50 / 45;}
+   else if (x <= 100) {
+      return 50 + (x - 45) * (100 - 50) / (100 - 45);}
+   else if (x <= 215) {
+      return 100 + (x - 235) * (200 - 100) / (215 - 100);}
+   else if (x <= 432) {
+      return 200 + (x - 215) * (300 - 200) / (432 - 215);}
+   else if (x <= 648) {
+      return 300 + (x - 432) * (500 - 300) / (648 - 432);}
+   else if (x >= 648) {
+       return 500;}
 }
 
+export function getNO2ISPU(x){
+   if (x <= 80) {
+      return x * 50 / 80;}
+   else if (x <= 200) {
+      return 50 + (x - 80) * (100 - 50) / (200 - 80);}
+   else if (x <= 1130) {
+      return 100 + (x - 200) * (200 - 100) / (1130 - 200);}
+   else if (x <= 2260) {
+      return 200 + (x - 1130) * (300 - 200) / (2260 - 1130);}
+   else if (x <= 3000) {
+      return 300 + (x - 2260) * (500 - 300) / (3000 - 2260);}  
+   else if (x >= 3000) {
+       return 648;}
+}
+// ------ end of get CO ISPU
 
 
-console.log(getPM10ISPU(avgPM10));
-console.log(getPM25ISPU(avgPM25));
-console.log(getSO2ISPU(avgSO2));
+
+// console.log(getPM25ISPU(avgPM25));
+// console.log(getSO2ISPU(avgSO2));

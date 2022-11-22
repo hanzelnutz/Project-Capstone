@@ -2,22 +2,45 @@ import { Box, Text} from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+
+function Clock() {
+  const date = new Date();
+  var h = date.getHours();
+  var m = date.getMinutes();
+  var s = date.getSeconds();
+  console.log(date.getHours());
+  return (
+    h + " : " + m + " : " + s
+  );
+}
+
 function Stats({label,value,click,ispu}) {
   const color = () => {
     if(ispu==-1){
-      return '#EFEEF1'
+      if (label = 'Humidity (%)' && (value>=40 && value<=60)){
+        return '#74D672'
+      }
+      else if (label = 'Temperature (°C)' && (value>=18 && value<=28)){
+        return '#74D672'
+      }
+      else {
+        return '#F5F590'
+      }
     }else if(ispu<=50){
-      return '#36D399'
+      return '#74D672'
     }else if(ispu<=100){
-      return '#3ABFF8'
+      return '#72D2FF'
     }else if(ispu<=200){
-      return '#FBBD23'
+      return '#F5F590'
     }else if(ispu<=300){
-      return '#F87272'
-    }else{
-      return '#1B1924'
+      return '#F7675F'
     }
+    else{
+      return '#000000'
+    }
+    
   }
+
   const ndcolor =()=>{
     if(ispu<=300){
       return 'black'
