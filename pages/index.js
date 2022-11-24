@@ -1,4 +1,4 @@
-import { Box, Container, SimpleGrid, Button, useDisclosure, Collapse, Grid, GridItem} from "@chakra-ui/react"
+import { Text, Box, Container, SimpleGrid, Button, useDisclosure, Collapse, Grid, GridItem, Img} from "@chakra-ui/react"
 import React, { useState, useEffect } from "react"
 import Title from "../component/title"
 import Stats from "../component/stats"
@@ -73,7 +73,7 @@ function App() {
          <Stats label={'O3 (µg/m3)'} value={dataset?.[8].at(-1)} ispu={parseInt(getO3ISPU(ispuO3))} click={function (){
           onOpenState1()
           onOpenState2()
-          onCloseState3()
+          onOpenState3()
         }}/>
         </Bounce>
       </SimpleGrid>
@@ -95,6 +95,16 @@ function App() {
         border={'2px'}
         borderColor={'black'}
       >
+        <Grid
+          templateRows='repeat(10, auto)'
+          templateColumns='repeat(10, auto)'
+          gap={1}
+        >
+        <GridItem rowStart={1}colStart={1} colEnd={2}>
+        <Img sizes='60px'  src='https://www.svgrepo.com/show/123881/quotation-mark.svg'  crop/>
+        </GridItem>
+        <GridItem colStart={2} colSpan={8} rowStart={2}rowSpan={8} alignContent={'center'} justifyItems={'center'}>
+        <Text textAlign={'justify'} fontSize={'md'} fontWeight={'bold'}>
         <checkAll ispuPM25={getPM25ISPU(ispuPM25)} ispuPM10={getPM10ISPU(ispuPM10)} ispuCO={getCOISPU(ispuCO)} ispuO3={getO3ISPU(ispuO3)} ispuNO2={getNO2ISPU(ispuNO2)} ispuCH={getCHISPU(ispuCH)}/>
         <AdviceCH ispu={getCHISPU(ispuCH)}/>
         <AdviceCO ispu={getCOISPU(ispuCO)}/>
@@ -103,7 +113,12 @@ function App() {
         <AdviceNO2 ispu={getNO2ISPU(ispuNO2)}/>
         <AdviceSuhu temp={dataset?.[2].at(-1)}/>
         <AdviceHumid humid={dataset?.[1].at(-1)}/>
-        
+        </Text>
+        </GridItem>
+        <GridItem rowStart={10}colStart={10} colEnd={11}>
+        <Img sizes='60px'  src='https://www.svgrepo.com/show/123881/quotation-mark.svg' transform="rotate(180deg)"/>
+        </GridItem>
+        </Grid>
       </Box>
       </GridItem>
       <GridItem colSpan={{base:'auto',md:7}}>
@@ -131,6 +146,8 @@ function App() {
         <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[5]} color={'#ffc300'} title='NO2' enter={isState1&&!isState2&&!isState3}/>
         <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[6]} color={'#6a4c93'} title='PM25' enter={isState1&&!isState2&&isState3}/>
         <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[7]} color={'#43291f'} title='PM10' enter={isState1&&isState2&&!isState3}/>
+        <LineChart ylabel={dataset?.[0]} xlabel={dataset?.[8]} color={'#d62727'} title='O3' enter={isState1&&isState2&&isState3}/>
+
       </Box>
       </GridItem>
       </Grid>
